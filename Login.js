@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ImageBackground, StyleSheet} from 'react-native';
+import {View, Text, ImageBackground, StyleSheet, Alert} from 'react-native';
 import {Button, Input, Icon} from '@rneui/base';
 
 export default class Login extends Component {
@@ -7,6 +7,8 @@ export default class Login extends Component {
     super(props);
     this.state = {
       siono: 0,
+      correo: '',
+      password: '',
     };
   }
 
@@ -16,6 +18,30 @@ export default class Login extends Component {
     };
     const alta = () => {
       this.setState({siono: 2});
+    };
+
+    const entrar = () => {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          // Typical action to be performed when the document is ready:
+          if (xhttp.response === '0') {
+            Alert.alert("Error!", "Credenciales erroneas", [
+              {text: 'Ok', onPress: () => console.log('OK Pressed')}
+            ])
+          } else if (xhttp.response === '1') {
+            
+          } else if (xhttp.response === "3") {
+            Alert.alert("Error!", "Date de alta", [
+              {text: 'Ok', onPress: () => console.log('OK Pressed')}
+            ])
+          }
+        }
+      };
+      xhttp.open('GET', 'filename', true);
+      xhttp.send();
+      console.log(this.state.correo)
+      console.log(this.state.password)
     };
     return (
       <View>
@@ -77,15 +103,19 @@ export default class Login extends Component {
                 style={styles.input}
                 placeholder="Correo"
                 leftIcon={<Icon name="mail" size={24} color={'white'} />}
-                onChangeText={value => this.setState({comment: value})}
+                onChangeText={value => this.setState({correo: value})}
               />
               <Input
                 style={styles.input}
                 placeholder="Password"
                 secureTextEntry={true}
                 leftIcon={<Icon name="lock" size={24} color={'white'} />}
-                onChangeText={value => this.setState({comment: value})}
+                onChangeText={value => this.setState({password: value})}
               />
+              <Button radius={'sm'} type="solid" onPress={entrar}>
+                Entrar
+                <Icon name="arrow-right" color="white" />
+              </Button>
             </View>
           ) : null}
           {this.state.siono == 2 ? (
@@ -131,6 +161,6 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   input: {
-    color: "#fff"
-  }
-})
+    color: '#fff',
+  },
+});
