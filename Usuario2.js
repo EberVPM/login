@@ -2,10 +2,9 @@ import {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import MenuDrawer from 'react-native-side-drawer';
 
-const Usuario = ({route}) => {
+const Usuario2 = ({route}) => {
   const [open, setOpen] = useState(false);
-
-  const {nombre} = route.params
+  const {nombre} = route.params;
 
   toggleOpen = () => {
     setOpen(!open);
@@ -64,4 +63,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Usuario;
+export default Usuario2;
