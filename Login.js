@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, ImageBackground, StyleSheet, Alert} from 'react-native';
 import {Button, Input, Icon} from '@rneui/base';
+import axios from 'axios';
 
 export default class Login extends Component {
   constructor(props) {
@@ -21,27 +22,21 @@ export default class Login extends Component {
     };
 
     const entrar = () => {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          // Typical action to be performed when the document is ready:
-          if (xhttp.response === '0') {
-            Alert.alert("Error!", "Credenciales erroneas", [
-              {text: 'Ok', onPress: () => console.log('OK Pressed')}
-            ])
-          } else if (xhttp.response === '1') {
-            
-          } else if (xhttp.response === "3") {
-            Alert.alert("Error!", "Date de alta", [
-              {text: 'Ok', onPress: () => console.log('OK Pressed')}
-            ])
-          }
+      let _this = this
+      const url = `https://prointerhost33.000webhostapp.com/login.php?correo=${_this.state.correo}&password=${_this.state.password}`
+      axios.get(url).then((response) => {
+        if (response.data == "0") {
+          Alert.alert("Error!", "Credenciales erroneas", [
+            {text: 'Ok', onPress: () => console.log('OK Pressed')}
+          ])
+        } else if (response.data == "3") {
+          Alert.alert("Error!", "Date de alta", [
+            {text: 'Ok', onPress: () => console.log('OK Pressed')}
+          ])
+        } else {
+          _this.props.navigation.navigate("usuario", { nombre: response.data })
         }
-      };
-      xhttp.open('GET', 'filename', true);
-      xhttp.send();
-      console.log(this.state.correo)
-      console.log(this.state.password)
+      })
     };
     return (
       <View>
