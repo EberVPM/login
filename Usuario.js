@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import MenuDrawer from 'react-native-side-drawer';
 
 const Usuario = ({route}) => {
@@ -37,6 +37,9 @@ const Usuario = ({route}) => {
           </TouchableOpacity>
         </View>
       </MenuDrawer>
+      <Image source={require("./images/fondo.jpg")} style={{ width:150, height:150 }}  />
+      <Image source={require("./images/gato.jpg")} style={{ width:300, height:300 }}  />
+      <Image source={require("./images/perro.jpg")} style={{ width:300, height:300 }}  />
     </View>
   );
 };
