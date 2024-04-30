@@ -1,8 +1,9 @@
-import {useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import MenuDrawer from 'react-native-side-drawer';
 
-const Usuario = ({route}) => {
+const Usuario = ({route, navigation}) => {
   const [open, setOpen] = useState(false);
 
   const {nombre} = route.params

@@ -3,6 +3,7 @@ import Login from './Login';
 import ManejoTabs from './ManejoTabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function App(): React.JSX.Element {
   const Stack = createNativeStackNavigator()

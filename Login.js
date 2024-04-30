@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, ImageBackground, StyleSheet, Alert} from 'react-native';
 import {Button, Input, Icon} from '@rneui/base';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class Login extends Component {
   constructor(props) {
@@ -13,6 +14,23 @@ export default class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('login');
+        if (value !== null) {
+          this.props.navigation.navigate("usuario", { nombre: value })
+        } else {
+          this.props.navigation.navigate("login")
+        }
+      } catch (e) {
+        this.props.navigation.navigate("login")
+      }
+    };
+
+    getData()
+  }
+
   render() {
     const login = () => {
       this.setState({siono: 1});
@@ -21,10 +39,14 @@ export default class Login extends Component {
       this.setState({siono: 2});
     };
 
+    const logout = async () => {
+      await AsyncStorage.removeItem("login")
+    }
+
     const entrar = () => {
       let _this = this
       const url = `https://prointerhost33.000webhostapp.com/login.php?correo=${_this.state.correo}&password=${_this.state.password}`
-      axios.get(url).then((response) => {
+      axios.get(url).then(async (response) => {
         if (response.data == "0") {
           Alert.alert("Error!", "Credenciales erroneas", [
             {text: 'Ok', onPress: () => console.log('OK Pressed')}
@@ -35,6 +57,7 @@ export default class Login extends Component {
           ])
         } else {
           _this.props.navigation.navigate("usuario", { nombre: response.data })
+          await AsyncStorage.setItem("login", response.data)
         }
       })
     };
